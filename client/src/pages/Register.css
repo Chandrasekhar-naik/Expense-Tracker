@@ -1,0 +1,21 @@
+.register-page{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height:100vh;
+  padding: 24px 16px;
+}
+.already-registered{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.already-registered button{
+  background-color: blue;
+  border-radius: 5px;
+  height:39px;
+}
+
+.register-page .ant-form{
+  width: min(100%, 440px);
+}

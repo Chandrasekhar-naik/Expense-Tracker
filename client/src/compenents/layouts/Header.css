@@ -1,0 +1,55 @@
+.collapse{
+    background: linear-gradient(45deg, #e2d4ff, #500ae4) !important;
+}
+
+.app-navbar{
+    box-shadow: 0 10px 30px rgba(80, 10, 228, 0.18);
+}
+
+.app-navbar .container-fluid{
+    padding: 14px 20px;
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link{
+    color: #ffffff !important;
+}
+
+.app-navbar .navbar-brand{
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.app-navbar .navbar-toggler{
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.app-navbar .navbar-toggler:focus{
+    box-shadow: none;
+}
+
+.app-navbar .navbar-actions{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.app-navbar .username-label{
+    margin: 0;
+    word-break: break-word;
+}
+
+@media (max-width: 991px){
+    .app-navbar .navbar-actions{
+        align-items: flex-start;
+        padding-top: 12px;
+    }
+
+    .app-navbar .nav-item{
+        width: 100%;
+    }
+
+    .app-navbar .btn{
+        width: 100%;
+    }
+}
