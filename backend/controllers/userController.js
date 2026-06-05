@@ -1,5 +1,6 @@
 const userModel = require("../models/userModels.js");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const loginController = async (req, res) => {
   try {
@@ -30,7 +31,20 @@ const loginController = async (req, res) => {
     const userResponse = user.toObject();
     delete userResponse.password;
 
-    res.status(200).json({ success: true, user: userResponse });
+    const token = jwt.sign(
+      {
+        userId: user._id,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRY || "7d",
+      }
+    );
+    res.status(200).json({
+      success: true,
+      token,
+      user: userResponse,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -81,7 +95,35 @@ const registerController = async (req, res) => {
   }
 };
 
+const updateProfileController = async(req,res)=>{
+  try {
+    const user = await userModel.findById(req.user.userId);
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = await bcrypt.hash(req.body.password, 10);
+    }
+
+    await user.save();
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: userResponse,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 module.exports = {
   loginController,
   registerController,
+  updateProfileController,
 };

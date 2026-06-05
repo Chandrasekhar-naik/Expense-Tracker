@@ -10,9 +10,6 @@ const app = express();
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 
-//databse call
-connectDB();
-
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
@@ -30,7 +27,17 @@ app.use('/api/v1/transactions',require('./routes/transactionRoute.js'));
 //port
 const PORT = process.env.PORT || 8080;
 
-//listen 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`.bgBlue.white);
-});
+//listen
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`.bgBlue.white);
+        });
+    } catch (error) {
+        console.error("Server startup failed".bgRed.white, error.message);
+        process.exit(1);
+    }
+};
+
+startServer();
